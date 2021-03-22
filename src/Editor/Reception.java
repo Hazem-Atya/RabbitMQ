@@ -1,11 +1,10 @@
 package Editor;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.DeliverCallback;
+import com.rabbitmq.client.*;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Reception {
     static String msg="";
@@ -20,12 +19,16 @@ public class Reception {
         channel.queueDeclare(queueName,false,false,false,null);
         System.out.println("[*] waiting for messages. To exit press CTRL+C");
 
+
         DeliverCallback deliverCallBack = (consumerTag,delivery)->{
             String message = new String (delivery.getBody(),"UTF-8");
+            HashMap<String,Object> ranges = (HashMap)delivery.getProperties().getHeaders();
             System.out.println(" [x] recieved ' "+message+"'");
             Reception.msg=message;
-
-            t.setText(msg);
+            int startRange = (int)ranges.get("startRange");
+            int endRange = (int)ranges.get("endRange");
+            System.out.println(startRange+" "+endRange);
+            t.replaceRange(message,startRange,endRange);
 
         };
         channel.basicConsume(queueName,true, deliverCallBack, consumerTag->{});

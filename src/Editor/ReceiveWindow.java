@@ -53,7 +53,6 @@ class ReceiveWindow extends JFrame {
     // main class
     public static void main(String[] args)
     {
-
         ReceiveWindow ri = new ReceiveWindow();
     }
 

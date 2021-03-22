@@ -5,7 +5,9 @@ package Editor;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import java.awt.event.ActionListener;
+import java.io.LineNumberReader;
 
 class SendWindow extends JFrame implements DocumentListener {
 
@@ -62,23 +64,33 @@ class SendWindow extends JFrame implements DocumentListener {
     public void insertUpdate(DocumentEvent e) {
 
         content = this.jt.getText();
-        System.out.println("from p1" + content);
+        String[] lines = content.split("\\n");
+        int lineNumber =0;
+        int startRange =0;
+        int endRange=0;
+        String modified="";
         try {
-            Envoi.envoyer(content, queueName);
+            int offset = jt.getCaretPosition();
+            lineNumber = jt.getLineOfOffset(offset);
+            System.out.println(lineNumber);
+            startRange = jt.getLineStartOffset(lineNumber);
+            endRange = jt.getLineEndOffset(lineNumber) ;
+            System.out.println(startRange+" "+endRange);
+            modified =this.jt.getText(startRange,endRange-startRange);
+        } catch (BadLocationException exception) {
+            exception.printStackTrace();
+        }
+        System.out.println("from "+f.getTitle()+ modified);
+        try {
+            Envoi.envoyer(modified, queueName,startRange,endRange);
         } catch (Exception exception) {
-
+            exception.printStackTrace();
         }
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        content = this.jt.getText();
-        System.out.println("from p1" + content);
-        try {
-            Envoi.envoyer(content, queueName);
-        } catch (Exception exception) {
-
-        }
+        insertUpdate(e);
 
     }
 
