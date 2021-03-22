@@ -1,8 +1,5 @@
 package Editor;
 
-import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
 public class SendMain {
 

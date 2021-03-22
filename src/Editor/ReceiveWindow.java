@@ -7,7 +7,6 @@ import java.awt.*;
 class ReceiveWindow extends JFrame {
     // JFrame
     static JFrame f;
-
     // JButton
     static JButton b;
 
