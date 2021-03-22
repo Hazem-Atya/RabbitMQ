@@ -7,6 +7,7 @@ import java.awt.*;
 class ReceiveWindow extends JFrame {
     // JFrame
     static JFrame f;
+
     // JButton
     static JButton b;
 
@@ -18,6 +19,7 @@ class ReceiveWindow extends JFrame {
     public ReceiveWindow()
     {
         f = new JFrame("Receiver");
+        f.setLocation(900,10);
         l1 = new JLabel("Sender 1: \n");
         t1= new TextArea("");
         t1.setColumns(50);

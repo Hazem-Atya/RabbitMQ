@@ -8,7 +8,6 @@ import com.rabbitmq.client.DeliverCallback;
 import java.awt.*;
 
 public class Reception {
-    static String msg="";
 
     //private final static String QUEUE_NAME = "hello";
     public static void recevoir(TextArea t, String queueName) throws Exception
@@ -22,9 +21,28 @@ public class Reception {
 
         DeliverCallback deliverCallBack = (consumerTag,delivery)->{
             String message = new String (delivery.getBody(),"UTF-8");
-            System.out.println(" [x] recieved ' "+message+"'");
-            Reception.msg=message;
-            t.setText(msg);
+            System.out.println(" [x] recieved '"+message+"'");
+
+            String msg=message;
+            System.out.println("MESSAGE LENGTH"+message.length());
+            if(message.charAt(message.length()-1)=='i')
+            {
+                int deb =Integer.parseInt(message.substring(1,message.length()-1));
+                String c = message.substring(0,1);
+                System.out.println("caracter: "+c);
+                System.out.println("index: "+deb);
+                t.insert(c,deb);
+            }
+            if(message.charAt(message.length()-1)=='d')
+            {
+                String s1 = message.substring(0,message.lastIndexOf("/"));
+                String s2 = message.substring(message.lastIndexOf("/")+1,message.length()-1);
+                int deb = Integer.parseInt(s1);
+                int fin = Integer.parseInt(s2);
+                t.replaceRange("",deb,fin);
+            }
+
+
 
         };
         channel.basicConsume(queueName,true, deliverCallBack, consumerTag->{});
