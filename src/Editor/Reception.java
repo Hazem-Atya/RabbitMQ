@@ -27,9 +27,10 @@ public class Reception {
             System.out.println("MESSAGE LENGTH"+message.length());
             if(message.charAt(message.length()-1)=='i')
             {
-                int deb =Integer.parseInt(message.substring(1,message.length()-1));
-                String c = message.substring(0,1);
-                System.out.println("caracter: "+c);
+                String s1 = message.substring(message.lastIndexOf("/")+1,message.length()-1);
+                int deb =Integer.parseInt(s1);
+                String c = message.substring(0,message.lastIndexOf("/"));
+                System.out.println("message: "+c);
                 System.out.println("index: "+deb);
                 t.insert(c,deb);
             }
