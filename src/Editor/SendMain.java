@@ -9,6 +9,5 @@ public class SendMain {
         p1.afficher("P1");
         SendWindow p2 = new SendWindow("file2");
         p2.afficher("P2");
-
     }
 }
