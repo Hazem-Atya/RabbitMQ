@@ -24,7 +24,6 @@ public class Reception {
             String message = new String (delivery.getBody(),"UTF-8");
             System.out.println(" [x] recieved ' "+message+"'");
             Reception.msg=message;
-
             t.setText(msg);
 
         };

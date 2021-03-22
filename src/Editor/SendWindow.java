@@ -5,14 +5,14 @@ package Editor;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.event.ActionListener;
+import javax.swing.text.BadLocationException;
 
 class SendWindow extends JFrame implements DocumentListener {
 
     // JFrame
     JFrame f;
 
-    String content;
+    //String content;
     String queueName;
     JScrollPane scroll;
 
@@ -43,11 +43,11 @@ class SendWindow extends JFrame implements DocumentListener {
         // add the text area and button to panel
 
 
-        p.add ( scroll );
+        p.add(scroll);
 
-      //  p.add(jt);
+        //  p.add(jt);
         f.add(p);
-        f.pack ();
+        f.pack();
 
         // set the size of frame
 
@@ -59,23 +59,40 @@ class SendWindow extends JFrame implements DocumentListener {
 
 
     @Override
-    public void insertUpdate(DocumentEvent e) {
+    public void insertUpdate(DocumentEvent evt) {
 
-        content = this.jt.getText();
-        System.out.println("from p1" + content);
+        int startOffset = evt.getOffset();
+        int endOffset = startOffset + evt.getLength();
+
+        String modified = "";
         try {
-            Envoi.envoyer(content, queueName);
+            modified = jt.getText(startOffset, endOffset - startOffset);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Start offset: " + startOffset);
+        System.out.println("end offset: " + endOffset);
+        System.out.println("Insertion: " + modified);
+        String msg = modified + startOffset + "i";
+        try {
+            Envoi.envoyer(msg, queueName);
         } catch (Exception exception) {
 
         }
     }
 
     @Override
-    public void removeUpdate(DocumentEvent e) {
-        content = this.jt.getText();
-        System.out.println("from p1" + content);
+    public void removeUpdate(DocumentEvent evt) {
+
+        int startOffset = evt.getOffset();
+        int endOffset = startOffset + evt.getLength();
+
+        System.out.println("Start offset: " + startOffset);
+        System.out.println("end offset: " + endOffset);
+        System.out.println("Delete");
+        String msg = ""+startOffset+endOffset+"d";
         try {
-            Envoi.envoyer(content, queueName);
+            Envoi.envoyer(msg, queueName);
         } catch (Exception exception) {
 
         }
