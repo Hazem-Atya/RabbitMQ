@@ -1,5 +1,7 @@
 package Editor;
-
+/**
+ * Cette classe je l'ai utilisé juste pour faire des tests sur les JtextArea
+ */
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
