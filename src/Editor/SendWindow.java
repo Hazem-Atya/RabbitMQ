@@ -73,9 +73,9 @@ class SendWindow extends JFrame implements DocumentListener {
         System.out.println("Start offset: " + startOffset);
         System.out.println("end offset: " + endOffset);
         System.out.println("Insertion: " + modified);
-        String msg =modified+"/"+startOffset + "i";
+        String msg =modified;
         try {
-            Envoi.envoyer(msg, queueName);
+            Envoi.envoyer(msg, queueName,startOffset,endOffset,"i");
         } catch (Exception exception) {
 
         }
@@ -90,9 +90,9 @@ class SendWindow extends JFrame implements DocumentListener {
         System.out.println("Start offset: " + startOffset);
         System.out.println("end offset: " + endOffset);
         System.out.println("Delete");
-        String msg = ""+startOffset+"/"+endOffset+"d";
+        String msg = "";
         try {
-            Envoi.envoyer(msg, queueName);
+            Envoi.envoyer(msg, queueName,startOffset,endOffset,"d");
         } catch (Exception exception) {
 
         }

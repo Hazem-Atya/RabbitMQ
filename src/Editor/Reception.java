@@ -6,6 +6,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class Reception {
 
@@ -22,27 +23,20 @@ public class Reception {
         DeliverCallback deliverCallBack = (consumerTag,delivery)->{
             String message = new String (delivery.getBody(),"UTF-8");
             System.out.println(" [x] recieved '"+message+"'");
-
+            HashMap<String,Object> ranges = (HashMap)delivery.getProperties().getHeaders();
+            int startRange = Integer.valueOf(ranges.get("startRange").toString());
+            int endRange = Integer.valueOf(ranges.get("endRange").toString());
+            String type = ranges.get("type").toString();
+            System.out.println("Ranges: "+startRange+" "+endRange+"     type: "+type);
             String msg=message;
-            System.out.println("MESSAGE LENGTH"+message.length());
-            if(message.charAt(message.length()-1)=='i')
-            {
-                String s1 = message.substring(message.lastIndexOf("/")+1,message.length()-1);
-                int deb =Integer.parseInt(s1);
-                String c = message.substring(0,message.lastIndexOf("/"));
-                System.out.println("message: "+c);
-                System.out.println("index: "+deb);
-                t.insert(c,deb);
+            System.out.println("message: "+message+"        MESSAGE LENGTH: "+message.length());
+            if(type.equals("i")) {
+                System.out.println("message: " + message);
+                t.insert(message, startRange);
+            } else {
+                System.out.println("delete");
+                t.replaceRange("",startRange,endRange);
             }
-            if(message.charAt(message.length()-1)=='d')
-            {
-                String s1 = message.substring(0,message.lastIndexOf("/"));
-                String s2 = message.substring(message.lastIndexOf("/")+1,message.length()-1);
-                int deb = Integer.parseInt(s1);
-                int fin = Integer.parseInt(s2);
-                t.replaceRange("",deb,fin);
-            }
-
 
 
         };
