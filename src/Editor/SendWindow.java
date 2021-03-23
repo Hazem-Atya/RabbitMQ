@@ -11,7 +11,7 @@ class SendWindow extends JFrame implements DocumentListener {
 
     // JFrame
     JFrame f;
-
+    boolean test=true;
     //String content;
     String queueName;
     JScrollPane scroll;
@@ -29,6 +29,7 @@ class SendWindow extends JFrame implements DocumentListener {
 
 
     public void afficher(String titre) {
+        this.
         // create a new frame to store text field and button
         f = new JFrame(titre);
         // create a text area, specifying the rows and columns
@@ -37,7 +38,6 @@ class SendWindow extends JFrame implements DocumentListener {
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jt.getDocument().addDocumentListener(this);
-
         JPanel p = new JPanel();
 
         // add the text area and button to panel
@@ -55,12 +55,20 @@ class SendWindow extends JFrame implements DocumentListener {
         f.setSize(500, 400);
 
         f.setVisible(true);
+        try {
+            //Reception.recevoir(t.get(queue), queue);
+            Receive.recevoir(jt, queueName,this);
+        } catch (Exception e) {
+
+        }
     }
 
 
     @Override
     public void insertUpdate(DocumentEvent evt) {
 
+        if(!test)
+            return;
         int startOffset = evt.getOffset();
         int endOffset = startOffset + evt.getLength();
 
@@ -80,11 +88,13 @@ class SendWindow extends JFrame implements DocumentListener {
         } catch (Exception exception) {
 
         }
+
     }
 
     @Override
     public void removeUpdate(DocumentEvent evt) {
-
+        if(!test)
+            return;
         int startOffset = evt.getOffset();
         int endOffset = startOffset + evt.getLength();
 
