@@ -19,6 +19,6 @@ public class SendMain {
             sendWindows.get(i-1).afficher(queueName);
 
         }
-
+        ReceiveWindow ri = new ReceiveWindow(queues);
     }
 }

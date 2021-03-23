@@ -42,7 +42,8 @@ class ReceiveWindow extends JFrame {
 
             try {
                 String queue= queues.get(i);
-                Reception.recevoir(t.get(queue), queue);
+                //Reception.recevoir(t.get(queue), queue);
+                Receive.recevoir(t.get(queue), queue);
             } catch (Exception e) {
 
             }
@@ -54,7 +55,7 @@ class ReceiveWindow extends JFrame {
     }
 
     // main class
-    public static void main(String[] args) {
+   /*public static void main(String[] args) {
         ArrayList<String> queues = new ArrayList<String>();
         int n=4;
         for (int i =1 ;i<=n;i++) {
@@ -64,7 +65,7 @@ class ReceiveWindow extends JFrame {
         }
         ReceiveWindow ri = new ReceiveWindow(queues);
     }
-
+*/
 
 }
 

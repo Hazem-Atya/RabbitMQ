@@ -75,7 +75,8 @@ class SendWindow extends JFrame implements DocumentListener {
         System.out.println("Insertion: " + modified);
         String msg =modified;
         try {
-            Envoi.envoyer(msg, queueName,startOffset,endOffset,"i");
+            //Envoi.envoyer(msg, queueName,startOffset,endOffset,"i");
+            Send.envoyer(msg, queueName,startOffset,endOffset,"i");
         } catch (Exception exception) {
 
         }
@@ -92,7 +93,8 @@ class SendWindow extends JFrame implements DocumentListener {
         System.out.println("Delete");
         String msg = "";
         try {
-            Envoi.envoyer(msg, queueName,startOffset,endOffset,"d");
+            //Envoi.envoyer(msg, queueName,startOffset,endOffset,"d");
+            Send.envoyer(msg, queueName,startOffset,endOffset,"d");
         } catch (Exception exception) {
 
         }
