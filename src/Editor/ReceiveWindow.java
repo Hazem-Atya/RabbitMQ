@@ -35,7 +35,6 @@ class ReceiveWindow extends JFrame {
             t.get(queue).setEditable(false);
             p.add(l);
             p.add(t.get(queue));
-
         }
 
         for (int i = 0; i < queues.size(); i++) {

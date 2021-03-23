@@ -17,13 +17,12 @@ public class Send {
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
-
-
             HashMap<String,Object> ranges = new HashMap<String,Object>();
             ranges.put("startRange",startRange);
             ranges.put("endRange",endRange);
             ranges.put("type",type);
-            channel.basicPublish(EXCHANGE_NAME, queueName, new AMQP.BasicProperties.Builder().headers(ranges).build(), msg.getBytes("UTF-8"));
+            ranges.put("queue",queueName);
+            channel.basicPublish(EXCHANGE_NAME, "", new AMQP.BasicProperties.Builder().headers(ranges).build(), msg.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + msg + "'");
         }
     }

@@ -29,6 +29,11 @@ public class Receive {
             int startRange = Integer.valueOf(ranges.get("startRange").toString());
             int endRange = Integer.valueOf(ranges.get("endRange").toString());
             String type = ranges.get("type").toString();
+            String senderQueue = ranges.get("queue").toString();
+            if(!queueName.equals(senderQueue))
+            {
+                return ;
+            }
             System.out.println("Ranges: "+startRange+" "+endRange+"     type: "+type);
             String msg=message;
             System.out.println("message: "+message+"        MESSAGE LENGTH: "+message.length());
