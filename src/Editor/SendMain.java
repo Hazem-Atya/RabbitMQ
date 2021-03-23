@@ -1,13 +1,24 @@
 package Editor;
 
 
+import java.util.ArrayList;
+
 public class SendMain {
 
 
+    static   ArrayList<String> queues = new ArrayList<String>();
+    static ArrayList <SendWindow> sendWindows = new ArrayList<SendWindow>();
     public static void main(String[] args) {
-        SendWindow p1 = new SendWindow("file1");
-        p1.afficher("P1");
-        SendWindow p2 = new SendWindow("file2");
-        p2.afficher("P2");
+
+        int n = 4;
+        for (int i =1 ;i<=n;i++)
+        {
+            String queueName="file"+i;
+            queues.add(queueName);
+            sendWindows.add(i-1,new SendWindow(queueName));
+            sendWindows.get(i-1).afficher(queueName);
+
+        }
+
     }
 }
