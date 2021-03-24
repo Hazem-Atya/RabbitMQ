@@ -4,8 +4,8 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
-
 import javax.swing.*;
+
 import java.util.HashMap;
 
 public class Receive {
