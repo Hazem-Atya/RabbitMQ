@@ -4,6 +4,11 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 class Window extends JFrame implements DocumentListener {
 
@@ -12,6 +17,7 @@ class Window extends JFrame implements DocumentListener {
     boolean test=true;
     //String content;
     String queueName;
+    int n;
     JScrollPane scroll;
 
     // label to display text
@@ -21,13 +27,13 @@ class Window extends JFrame implements DocumentListener {
     JTextArea jt;
 
 
-    public Window(String queueName) {
+    public Window(String queueName,int n) {
+        this.n=n;
         this.queueName = queueName;
     }
 
 
     public void afficher(String titre) {
-        this.
         // create a new frame to store text field and button
         f = new JFrame(titre);
         // create a text area, specifying the rows and columns
@@ -43,28 +49,43 @@ class Window extends JFrame implements DocumentListener {
 
         p.add(scroll);
 
-        //  p.add(jt);
         f.add(p);
         f.pack();
 
         // set the size of frame
 
 
-        f.setSize(500, 400);
+        f.setSize(450, 400);
 
         f.setVisible(true);
-        try {
-            //Reception.recevoir(t.get(queue), queue);
-            Receive.recevoir(jt, queueName,this);
-        } catch (Exception e) {
 
+        HashMap<String, JTextArea> t = new HashMap<String, JTextArea>();
+        for (int i = 1; i < n; i++) {
+            int numQueue = queueNum();
+            String queue = ((numQueue + i) % n == 0) ? "sender" + n : "sender" + (numQueue + i) % n;
+            t.put(queue, new JTextArea());
+        }
+        TreeMap<String, JTextArea> sorted = new TreeMap<>(t);
+        ArrayList<String> qList = new ArrayList<>(t.keySet());
+        for (int i = 1; i < n; i++) {
+            String queue = qList.get(qList.size()-(i));
+            JLabel l = new JLabel(queue);
+            t.get(queue).setColumns(40);
+            t.get(queue).setRows(10);
+            t.get(queue).setEditable(false);
+            p.add(l);
+            p.add(sorted.get(queue));
+            try {
+                Receive.recevoir(t.get(queue), queue, this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
     @Override
     public void insertUpdate(DocumentEvent evt) {
-
         if(!test)
             return;
         int startOffset = evt.getOffset();
@@ -76,13 +97,10 @@ class Window extends JFrame implements DocumentListener {
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
-        System.out.println("Start offset: " + startOffset);
-        System.out.println("end offset: " + endOffset);
-        System.out.println("Insertion: " + modified);
         String msg =modified;
         try {
-            //Envoi.envoyer(msg, queueName,startOffset,endOffset,"i");
-            Send.envoyer(msg, queueName,startOffset,endOffset,"i");
+            for (int i=0;i<n-1;i++)
+                Send.envoyer(msg, queueName,startOffset,endOffset,"i","sender"+queueNum());
         } catch (Exception exception) {
 
         }
@@ -95,14 +113,10 @@ class Window extends JFrame implements DocumentListener {
             return;
         int startOffset = evt.getOffset();
         int endOffset = startOffset + evt.getLength();
-
-        System.out.println("Start offset: " + startOffset);
-        System.out.println("end offset: " + endOffset);
-        System.out.println("Delete");
         String msg = "";
         try {
-            //Envoi.envoyer(msg, queueName,startOffset,endOffset,"d");
-            Send.envoyer(msg, queueName,startOffset,endOffset,"d");
+            for (int i=0;i<n-1;i++)
+                Send.envoyer(msg, queueName,startOffset,endOffset,"d","sender"+queueNum());
         } catch (Exception exception) {
 
         }
@@ -112,5 +126,8 @@ class Window extends JFrame implements DocumentListener {
     @Override
     public void changedUpdate(DocumentEvent e) {
 
+    }
+    public int queueNum(){
+        return Integer.parseInt("0"+queueName.charAt(queueName.length() - 1));
     }
 }

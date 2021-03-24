@@ -13,7 +13,6 @@ public class Receive {
 
     public static void recevoir(JTextArea t, String queueName, Window w) throws Exception {
 
-      //  w.jt.getDocument().removeDocumentListener(w);
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
@@ -33,30 +32,25 @@ public class Receive {
             int endRange = Integer.valueOf(ranges.get("endRange").toString());
             String type = ranges.get("type").toString();
             String senderQueue = ranges.get("queue").toString();
-            System.out.println("sender Queue: "+senderQueue);
-            if(queueName.equals(senderQueue))
+            String dest = ranges.get("dest").toString();
+            System.out.println("sender Queue: "+senderQueue+" to "+dest);
+            System.out.println("queue name : "+queueName+" and dest: "+dest);
+            if(!queueName.equals(dest))
             {
+                System.out.println("not for me");
                 return;
             }
-            System.out.println("Ranges: "+startRange+" "+endRange+"     type: "+type);
             String msg=message;
-            System.out.println("message: "+message+"        MESSAGE LENGTH: "+message.length());
             if(type.equals("i")) {
                 System.out.println("message: " + message);
-                synchronized (w)     {
-                    t.getDocument().removeDocumentListener(w);
                     t.insert(message, startRange);
-                    t.getDocument().addDocumentListener(w);
-                }
+
 
             } else {
                 System.out.println("delete");
-                t.getDocument().removeDocumentListener(w);
                 t.replaceRange("",startRange,endRange);
-                t.getDocument().addDocumentListener(w);
 
             }
-           // w.jt.getDocument().addDocumentListener(w);
         };
         channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
     }

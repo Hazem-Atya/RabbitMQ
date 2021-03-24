@@ -11,7 +11,7 @@ public class Send {
 
     private static final String EXCHANGE_NAME = "logs";
 
-    public static void envoyer(String msg,String queueName,int startRange,int endRange,String type) throws Exception {
+    public static void envoyer(String msg,String queueName,int startRange,int endRange,String type,String dest) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         try (Connection connection = factory.newConnection();
@@ -22,6 +22,7 @@ public class Send {
             ranges.put("endRange",endRange);
             ranges.put("type",type);
             ranges.put("queue",queueName);
+            ranges.put("dest",dest);
             channel.basicPublish(EXCHANGE_NAME, "", new AMQP.BasicProperties.Builder().headers(ranges).build(), msg.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + msg + "'");
         }
