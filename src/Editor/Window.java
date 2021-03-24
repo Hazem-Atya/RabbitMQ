@@ -7,7 +7,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-class SendWindow extends JFrame implements DocumentListener {
+class Window extends JFrame implements DocumentListener {
 
     // JFrame
     JFrame f;
@@ -23,7 +23,7 @@ class SendWindow extends JFrame implements DocumentListener {
     JTextArea jt;
 
 
-    public SendWindow(String queueName) {
+    public Window(String queueName) {
         this.queueName = queueName;
     }
 
@@ -56,7 +56,6 @@ class SendWindow extends JFrame implements DocumentListener {
 
         f.setVisible(true);
         try {
-            //Reception.recevoir(t.get(queue), queue);
             Receive.recevoir(jt, queueName,this);
         } catch (Exception e) {
 
@@ -83,7 +82,6 @@ class SendWindow extends JFrame implements DocumentListener {
         System.out.println("Insertion: " + modified);
         String msg =modified;
         try {
-            //Envoi.envoyer(msg, queueName,startOffset,endOffset,"i");
             Send.envoyer(msg, queueName,startOffset,endOffset,"i");
         } catch (Exception exception) {
 
@@ -103,7 +101,6 @@ class SendWindow extends JFrame implements DocumentListener {
         System.out.println("Delete");
         String msg = "";
         try {
-            //Envoi.envoyer(msg, queueName,startOffset,endOffset,"d");
             Send.envoyer(msg, queueName,startOffset,endOffset,"d");
         } catch (Exception exception) {
 
