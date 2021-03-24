@@ -46,7 +46,6 @@ class Window extends JFrame implements DocumentListener {
 
         // add the text area and button to panel
 
-
         p.add(scroll);
 
         f.add(p);

@@ -34,10 +34,8 @@ public class Receive {
             String senderQueue = ranges.get("queue").toString();
             String dest = ranges.get("dest").toString();
             System.out.println("sender Queue: "+senderQueue+" to "+dest);
-            System.out.println("queue name : "+queueName+" and dest: "+dest);
             if(!queueName.equals(dest))
             {
-                System.out.println("not for me");
                 return;
             }
             String msg=message;
