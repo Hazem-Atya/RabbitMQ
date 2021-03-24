@@ -1,5 +1,3 @@
-package Editor;
-
 // Java Program to create a simple JTextArea
 
 import javax.swing.*;
@@ -7,7 +5,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-class SendWindow extends JFrame implements DocumentListener {
+class Window extends JFrame implements DocumentListener {
 
     // JFrame
     JFrame f;
@@ -23,7 +21,7 @@ class SendWindow extends JFrame implements DocumentListener {
     JTextArea jt;
 
 
-    public SendWindow(String queueName) {
+    public Window(String queueName) {
         this.queueName = queueName;
     }
 

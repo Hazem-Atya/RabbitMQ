@@ -1,4 +1,4 @@
-package Editor;
+
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -6,13 +6,12 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.HashMap;
 
 public class Receive {
     private static final String EXCHANGE_NAME = "logs";
 
-    public static void recevoir(JTextArea t, String queueName,SendWindow w) throws Exception {
+    public static void recevoir(JTextArea t, String queueName, Window w) throws Exception {
 
       //  w.jt.getDocument().removeDocumentListener(w);
         ConnectionFactory factory = new ConnectionFactory();
