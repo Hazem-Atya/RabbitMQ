@@ -6,7 +6,7 @@ public class SendMain {
     static ArrayList <Window> sendWindows = new ArrayList<Window>();
     public static void main(String[] args) {
 
-        int n = 6;
+        int n = 4;
         for (int i =1 ;i<=n;i++)
         {
             String queueName="file"+i;

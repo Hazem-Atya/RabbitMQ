@@ -22,8 +22,10 @@ public class Send {
             ranges.put("endRange",endRange);
             ranges.put("type",type);
             ranges.put("queue",queueName);
+            System.out.println("Ranges: Position "+startRange+" to "+endRange+"\ntype: "+type);
+
             channel.basicPublish(EXCHANGE_NAME, "", new AMQP.BasicProperties.Builder().headers(ranges).build(), msg.getBytes("UTF-8"));
-            System.out.println(" [x] Sent '" + msg + "'");
+            System.out.println("Sent '" + msg + "' from "+queueName);
         }
     }
 }

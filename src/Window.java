@@ -76,9 +76,9 @@ class Window extends JFrame implements DocumentListener {
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
-        System.out.println("Start offset: " + startOffset);
-        System.out.println("end offset: " + endOffset);
-        System.out.println("Insertion: " + modified);
+        //System.out.println("Start offset: " + startOffset);
+       // System.out.println("end offset: " + endOffset);
+       // System.out.println("Insertion: " + modified);
         String msg =modified;
         try {
             //Envoi.envoyer(msg, queueName,startOffset,endOffset,"i");
@@ -96,9 +96,9 @@ class Window extends JFrame implements DocumentListener {
         int startOffset = evt.getOffset();
         int endOffset = startOffset + evt.getLength();
 
-        System.out.println("Start offset: " + startOffset);
-        System.out.println("end offset: " + endOffset);
-        System.out.println("Delete");
+       // System.out.println("Start offset: " + startOffset);
+      //  System.out.println("end offset: " + endOffset);
+      //  System.out.println("Delete");
         String msg = "";
         try {
             //Envoi.envoyer(msg, queueName,startOffset,endOffset,"d");
